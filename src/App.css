@@ -1,38 +1,205 @@
+/* --- 1. Import a Modern Font --- */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* --- 2. Define a New, Calmer Color Palette --- */
+:root {
+  /* Primary Colors */
+  --primary: #5a4fcf; /* A nice indigo/purple */
+  --primary-hover: #4a3fbf;
+
+  /* Neutral Colors */
+  --light-bg: #f8f9fa; /* Page background */
+  --white: #ffffff; /* Card background */
+  --border-color: #dee2e6;
+
+  /* Text Colors */
+  --dark-text: #212529; /* Headings */
+  --light-text: #6c757d; /* Paragraphs / secondary text */
+
+  /* Timer Background Colors (Softer, modern pastels) */
+  --green: hsl(134, 41%, 95%);
+  --yellow: hsl(48, 89%, 95%);
+  --red: hsl(354, 70%, 96%);
+}
+
+/* --- 3. Global App Styles --- */
 .App {
+  font-family: "Inter", Arial, sans-serif; /* Use the new font */
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: var(--light-bg); /* Use the new light background */
+  transition: background-color 2s ease; /* Keep the user's color transition */
+  color: var(--dark-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- 4. The Main "Card" Container --- */
+.container {
+  background: var(--white);
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  min-width: 400px;
+  max-width: 500px;
+}
+
+/* --- 5. Typography --- */
+h1 {
+  font-size: 4rem;
+  margin: 1rem 0;
+  color: var(--primary); /* Use the primary color for the timer */
+  font-weight: 700;
+}
+
+h2 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-weight: 600;
+  color: var(--dark-text);
+  text-align: left;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+p {
+  color: var(--light-text);
+  line-height: 1.6;
+}
+
+/* --- 6. Modern Inputs & Buttons --- */
+input[type="number"],
+input[type="text"] {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-right: 0.5rem;
+  width: calc(100% - 100px); /* Make text input fill space */
+  box-sizing: border-box; /* Important for padding */
+  font-family: "Inter", sans-serif;
+  transition: all 0.2s ease;
+}
+
+/* Add a nice focus ring */
+input[type="number"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px hsla(245, 60%, 50%, 0.1);
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--primary);
   color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px); /* Add a subtle "lift" */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.skip-btn {
+  background-color: var(--light-text);
+  margin-top: 1rem;
+}
+
+.skip-btn:hover {
+  background-color: var(--dark-text);
+}
+
+/* --- 7. Redesigned Task List --- */
+
+/* Style for the *entry phase* list (un-styled) */
+.container > div > ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.container > div > ul li {
+  background: #f9f9f9;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  color: var(--light-text);
+}
+
+/* Style for the *interactive* work-phase list */
+.task-list {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+}
+
+.task-list li {
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border-color);
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+
+  /* This is the key for our custom checkbox */
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+
+.task-list li:not(.completed):hover {
+  background-color: #fcfcfc;
+  border-color: #c9c9c9;
+}
+
+/* The custom "checkbox" circle */
+.task-list li::before {
+  content: "";
+  display: inline-block;
+  flex-shrink: 0; /* Prevents shrinking */
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 50%; /* A circle! */
+  margin-right: 12px;
+  transition: all 0.2s ease;
+}
+
+/* Style for completed tasks */
+.task-list li.completed {
+  text-decoration: line-through;
+  color: var(--light-text);
+  background-color: #fdfdfd;
+  opacity: 0.7;
+}
+
+/* The "checked" state for our custom circle */
+.task-list li.completed::before {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  content: "\2713"; /* This is a checkmark unicode character */
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 18px; /* Center the checkmark */
 }
